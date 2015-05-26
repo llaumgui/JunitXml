@@ -7,18 +7,25 @@ php:
   - 7.0
   - hhvm
   - nightly
+
 matrix:
   allow_failures:
     - php: 7.0
+    - php: hhvm
+    - php: nightly
 
 sudo: false
 
 before_script:
+  # Update composer binary
   - composer self-update
+  # Install require & require-dev
   - composer install --prefer-source
+  # Install build tools but no dev tools
   - composer require squizlabs/php_codesniffer:2.0.*@dev
 
 script:
   - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml
-  - ./vendor/bin/test-reporter
   - ./vendor/bin/phpcs --standard=PSR2 src/* tests/*
+  # TestReporter seem desn't work with these version og PHP
+  - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != 'nightly' && $TRAVIS_PHP_VERSION != '7.0' ]]; then ./vendor/bin/test-reporter; fi
