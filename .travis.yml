@@ -16,7 +16,7 @@ sudo: false
 before_script:
   - composer self-update
   - composer install --prefer-source
-  - composer require squizlabs/php_codesniffe:2.0.*@dev
+  - composer require squizlabs/php_codesniffer:2.0.*@dev
 
 script:
   - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml
