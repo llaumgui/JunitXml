@@ -1,7 +1,7 @@
 {
   "name": "llaumgui/junit-xml",
   "type": "library",
-  "description": "PHP Library for generate junit XML document.",
+  "description": "PHP library for generate XML document in JUnit format.",
   "keywords": ["junit", "xml"],
   "license": "MIT",
   "authors": [{
@@ -11,6 +11,9 @@
   }],
   "require": {
     "php": ">=5.3.3"
+  },
+  "require-dev": {
+    "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
     "psr-4": {
