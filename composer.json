@@ -1,0 +1,20 @@
+{
+  "name": "llaumgui/junit-xml",
+  "type": "library",
+  "description": "PHP Library for generate junit XML document.",
+  "keywords": ["junit", "xml"],
+  "license": "MIT",
+  "authors": [{
+    "name": "Guillaume Kulakowski",
+    "email": "guillaume@kulakowski.fr",
+    "homepage": "https://github.com/llaumgui/JunitXml"
+  }],
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Llaumgui\\JunitXml\\": "src/"
+    }
+  }
+}
