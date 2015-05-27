@@ -1,12 +1,19 @@
 # JunitXml
 [![Build Status branch master](https://travis-ci.org/llaumgui/JunitXml.svg?branch=master)](https://travis-ci.org/llaumgui/JunitXml) [![Code Climate](https://codeclimate.com/github/llaumgui/JunitXml/badges/gpa.svg)](https://codeclimate.com/github/llaumgui/JunitXml) [![Test Coverage](https://codeclimate.com/github/llaumgui/JunitXml/badges/coverage.svg)](https://codeclimate.com/github/llaumgui/JunitXml/coverage)
 
-PHP Library for generate junit XML document.
+PHP library for generate XML document in JUnit format.
 
 
 
 ## Installation
 
+
+
+## Usage
+* Create a new TestSuites:
+~~~php
+$testSuites = new JunitXmlTestSuites();
+~~~
 
 
 ## License
