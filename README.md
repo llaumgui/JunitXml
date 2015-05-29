@@ -8,6 +8,9 @@ PHP library for generate XML document in JUnit format.
 ## Installation
 
 
+## API
+See [documentation](https://llaumgui.github.io/JunitXml/).
+
 
 ## Usage
 * Create a new TestSuites:

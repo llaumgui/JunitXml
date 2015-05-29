@@ -1,0 +1,12 @@
+source:
+  - src
+destination: gh-pages
+
+templateTheme: bootstrap
+title: "JunitXml API Documentation (master)"
+tree: Yes
+download: No
+todo: Yes
+
+baseUrl: "https://github.com/llaumgui/JunitXml"
+googleAnalytics: "UA-63534466-1"
