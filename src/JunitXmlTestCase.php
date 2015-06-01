@@ -10,61 +10,56 @@
 
 namespace Llaumgui\JunitXml;
 
+use Llaumgui\JunitXml\JunitXmlTestElement;
+
 /**
  * The JunitXmlTestCase class.
  *
  * Build a JunitXmlTestCase object.
  */
-class JunitXmlTestCase
+class JunitXmlTestCase extends JunitXmlTestElement
 {
-    /**
-     * @var DOMElement
-     */
-    private $xmlTestCase;
     /**
      * @var JunitXmlTestSuite
      */
     private $testSuite;
     /**
-    * @var string
-    */
-    private $name = '';
+     * @var int
+     */
+    private $assertions;
+    /**
+     * @var int
+     */
+    private $error;
+    /**
+     * @var int
+     */
+    private $skipped;
+    /**
+     * @var int
+     */
+    private $failure;
     /**
      * @var string
      */
-    private $class = '';
+    private $classname;
     /**
      * @var string
      */
-    private $file = '';
-    /**
-     * @var string
-     */
-    private $line = '';
-    /**
-     * @var string
-     */
-    private $assertions = 0;
-    /**
-     * @var float
-     */
-    private $beginimeTime;
-    /**
-     * @var float
-     */
-    private $time;
+    private $status;
 
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param JunitXmlTestSuite $ts
+     * @param JunitXmlTestSuite $testSuite
      */
-    public function __construct(JunitXmlTestSuite $ts)
+    public function __construct(JunitXmlTestSuite $testSuite)
     {
-        $this->testSuite = $ts;
-        $this->beginimeTime = \microtime(true);
-        $this->xmlTestCase = new \DOMElement('testcase');
+        $this->startTimer();
+
+        $this->testSuite = $testSuite;
+        $this->domElement = new \DOMElement('testcase');
     }
 
 
@@ -73,114 +68,97 @@ class JunitXmlTestCase
      */
     public function finish()
     {
-        $this->time = \microtime(true) - $this->beginimeTime;
+        /*
+         * Update JunitXmlTestSuite
+         */
+        $this->testSuite->incTests();
+        foreach (array('skipped', 'error', 'failure') as $attribute) {
+            if (is_int($this->$attribute)) {
+                call_user_func(array($this->testSuite, 'inc' . ucfirst($attribute) . 's'), $this->$attribute);
+            }
+        }
+        // @TODO Add other increments.
 
-        $this->xmlTestCase->setAttribute('time', $this->time);
+        /*
+         * Update JunitXmlTestCase
+         */
+        // Optional string elements
+        foreach (array('name', 'classname', 'status') as $attribute) {
+            if (!empty($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+        // Optional int elements
+        foreach (array('assertions', 'skipped', 'error', 'failure') as $attribute) {
+            if (is_int($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+        $this->setElementAttribute('time', $this->getExecTime());
+    }
+
+
+    /**
+     * Add an domXmlElement.
+     *
+     * @param string $name    Name of the DOMElement.
+     * @param string $message Message of the DOMElement.
+     * @param string $type    Attribute type of the DOMElement.
+     */
+    public function addDomElement($name, $message, $type = false)
+    {
+        $element = new \DOMElement($name);
+        $this->domElement->appendChild($element);
+        if ($type !== false) {
+            $element->setAttribute("type", $type);
+        }
+        $element->nodeValue = $message;
+
+        $this->$name++;
     }
 
 
     /**
      * Add an error
      *
-     * @param string $type
+     * @param string $message
+      * @param string $type
+     */
+    public function addError($message, $type = false)
+    {
+        $this->addDomElement('error', $message, $type);
+    }
+
+    /**
+     * Add an skipped
+     *
      * @param string $message
      */
-    public function addError($type, $message)
+    public function addSkipped($message)
     {
-        $this->testSuite->incError();
-
-        $errorXML = new \DOMElement('error');
-        $this->xmlTestCase->appendChild($errorXML);
-        $errorXML->setAttribute("type", $type);
-        $errorXML->nodeValue = $message;
+        $this->addDomElement('skipped', $message);
     }
 
 
     /**
      * Add an failures
      *
-     * @param string $type
      * @param string $message
+     * @param string $type
      */
-    public function addFaillure($type, $message)
+    public function addFailure($message, $type = false)
     {
-        $this->testSuite->incFailures();
-
-        $failureXML = new \DOMElement('failure');
-        $this->xmlTestCase->appendChild($failureXML);
-        $failureXML->setAttribute("type", $type);
-        $failureXML->nodeValue = $message;
+        $this->addDomElement('failure', $message, $type);
     }
 
 
     /**
-     * Set Name
+     * Increment assertion.
      *
-     * @param string $name
+     * @param int $inc Increment.
      */
-    public function setName($name)
+    public function incAssertions($inc = 1)
     {
-        $this->name = $name;
-        $this->xmlTestCase->setAttribute('name', $this->name);
-    }
-
-
-    /**
-     * Set class
-     *
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-        $this->xmlTestCase->setAttribute('class', $this->class);
-    }
-
-
-    /**
-     * Set file
-     *
-     * @param string $file
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-        $this->xmlTestCase->setAttribute('file', $this->file);
-    }
-
-
-    /**
-     * Set line
-     *
-     * @param string $line
-     */
-    public function setLine($line)
-    {
-        $this->line = $line;
-        $this->xmlTestCase->setAttribute('line', $this->line);
-    }
-
-
-    /**
-     * Set assertions
-     *
-     * @param string $assertions
-     */
-    public function setAssertions($assertions)
-    {
-        $this->assertions = $assertions;
-        $this->testSuite->incAssertions($assertions);
-        $this->xmlTestCase->setAttribute('assertions', $this->assertions);
-    }
-
-
-    /**
-     * Get $xmlTestSuite
-     *
-     * @return DOMElement
-     */
-    public function getXmlTestCase()
-    {
-        return $this->xmlTestCase;
+        $this->assertions = $inc;
     }
 }

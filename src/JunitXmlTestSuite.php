@@ -10,25 +10,19 @@
 
 namespace Llaumgui\JunitXml;
 
+use Llaumgui\JunitXml\JunitXmlTestElement;
+
 /**
  * The JunitXmlTestSuite class.
  *
  * Build a JunitXmlTestSuite object.
  */
-class JunitXmlTestSuite
+class JunitXmlTestSuite extends JunitXmlTestElement
 {
     /**
-    * @var DOMElement
-    */
-    private $xmlTestSuite;
-    /**
-     * @var string
+     * @var JunitXmlTestSuites
      */
-    private $name = '';
-    /**
-     * @var string
-     */
-    private $file = '';
+    private $testSuites = null;
     /**
      * @var int
      */
@@ -36,168 +30,190 @@ class JunitXmlTestSuite
     /**
      * @var int
      */
-    private $errors = 0;
+    private $failures;
     /**
      * @var int
      */
-    private $failures = 0;
+    private $disabled;
     /**
      * @var int
      */
-    private $assertions = 0;
+    private $errors;
     /**
-     * @var float
+     * @var int
      */
-    private $beginimeTime;
+    private $skipped;
     /**
-     * @var float
+     * @var string
      */
-    private $time;
+    private $timestamp;
     /**
-     * @var JunitXmlTestSuites
+     * @var string
      */
-    private $mainTestSuite = null;
+    private $hostname;
+    /**
+     * @var string
+     */
+    private $id;
+    /**
+     * @var string
+     */
+    private $package;
 
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param JunitXmlTestSuite $mainTestSuite
+     * @param JunitXmlTestSuite $mainTestSuite.
      */
-    public function __construct(JunitXmlTestSuite $mainTestSuite = null)
+    public function __construct(JunitXmlTestSuites $testSuites)
     {
-        if ($mainTestSuite instanceof JunitXmlTestSuite) {
-            $this->mainTestSuite = $mainTestSuite;
-        }
-        $this->beginimeTime = \microtime(true);
-        $this->xmlTestSuite = new \DOMElement('testsuite');
+        $this->startTimer();
+        $this->testSuites = $testSuites;
+        $this->timestamp = date("c");
+
+        $this->domElement = new \DOMElement('testsuite');
     }
 
 
     /**
-     * Add a test suite on a main TestSuite
+     * Add testcase to testsuite.
+     *
+     * @param string $name Name of the testcase.
+     * @return JunitXmlTestCase REturn the JunitXmlTestCase.
      */
-    public function addTestSuite()
+    public function addTest($name = '')
     {
-        $ts = new JunitXmlTestSuite($this);
-        $this->xmlTestSuite->appendChild($ts->getXmlTestSuite());
-
-        return $ts;
-    }
-
-
-    /**
-     * Add test
-     */
-    public function addTest()
-    {
-        $this->incTest();
-
         $test = new JunitXmlTestCase($this);
-        $this->xmlTestSuite->appendChild($test->getXmlTestCase());
+        $this->domElement->appendChild($test->getXmlElement());
+        $test->setName($name);
 
         return $test;
     }
 
 
     /**
-     * Finish test suite
+     * Finish testsuite.
      */
     public function finish()
     {
-        // For a testsuite children of a testsuite
-        if ($this->mainTestSuite instanceof JunitXmlTestSuite) {
-            $this->mainTestSuite->incTest($this->tests);
-            $this->mainTestSuite->incError($this->errors);
-            $this->mainTestSuite->incFailures($this->failures);
+        /*
+         * Update JunitXmlTestSuites
+         */
+        $this->testSuites->incTests($this->tests);
+        // Optional elements
+        foreach (array('disabled','errors','failures') as $attribute) {
+            if (is_int($this->$attribute)) {
+                $this->testSuites->setElementAttribute($attribute, $this->$attribute);
+            }
         }
 
-        $this->time = \microtime(true) - $this->beginimeTime;
 
-        $this->xmlTestSuite->setAttribute('tests', $this->tests);
-        $this->xmlTestSuite->setAttribute('errors', $this->errors);
-        $this->xmlTestSuite->setAttribute('failures', $this->failures);
-        $this->xmlTestSuite->setAttribute('time', $this->time);
+        /*
+         * Update JunitXmlTestSuite
+         */
+        // Optional string elements
+        foreach (array('timestamp', 'hostname', 'id', 'package') as $attribute) {
+            if (!empty($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+        // Optional int elements
+        foreach (array('disabled','errors','failures', 'skipped') as $attribute) {
+            if (is_int($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+
+        $this->setElementAttribute('name', $this->name);
+        $this->setElementAttribute('tests', $this->tests);
+        $this->setElementAttribute('time', $this->getExecTime());
     }
 
 
     /**
-     * Set Name
+     * Increment tests.
      *
-     * @param string $name
+     * @param int $inc Increment.
      */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        $this->xmlTestSuite->setAttribute('name', $this->name);
-    }
-
-
-    /**
-     * Set file
-     *
-     * @param string $file
-     */
-    public function setFile($file)
-    {
-        $this->file = $file;
-
-        $this->xmlTestSuite->setAttribute('file', $this->file);
-    }
-
-
-    /**
-     * Increment test
-     *
-     * @param int $inc
-     */
-    public function incTest($inc = 1)
+    public function incTests($inc = 1)
     {
         $this->tests += $inc;
     }
 
 
     /**
-     * Increment errors
+     * Increment errors.
      *
-     * @param int $inc
+     * @param int $inc Increment.
      */
-    public function incError($inc = 1)
+    public function incErrors($inc = 1)
     {
-        $this->errors += $inc;
+        $this->errors = (int) $this->errors + $inc;
     }
 
 
     /**
-     * Increment failures
+     * Increment failures.
      *
-     * @param int $inc
+     * @param int $inc Increment.
      */
     public function incFailures($inc = 1)
     {
-        $this->failures += $inc;
+        $this->failures = (int) $this->failures + $inc;
     }
 
 
     /**
-     * Increment failures
+     * Increment disabled.
      *
-     * @param int $inc
+     * @param int $inc Increment.
      */
-    public function incAssertions($inc = 1)
+    public function incDisabled($inc = 1)
     {
-        $this->assertions += $inc;
+        $this->disabled = (int) $this->disabled + $inc;
     }
 
 
     /**
-     * Get $xmlTestSuite
+     * Increment skipped.
      *
-     * @return DOMElement
+     * @param int $inc Increment.
      */
-    public function getXmlTestSuite()
+    public function incSkipped($inc = 1)
     {
-        return $this->xmlTestSuite;
+        $this->skipped = (int) $this->skipped + $inc;
+    }
+
+
+    /**
+     * Set testsuite id.
+     *
+     * @param string $package The testsuite id.
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Set package name.
+     *
+     * @param string $package The Package name.
+     */
+    public function setPackage($package)
+    {
+        $this->package = $package;
+    }
+
+
+    /**
+     * Set hostname.
+     *
+     * @param string $hostname The hostname.
+     */
+    public function setHostname($hostname)
+    {
+        $this->hostname = $hostname;
     }
 }

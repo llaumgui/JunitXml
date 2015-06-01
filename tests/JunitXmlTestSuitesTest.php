@@ -16,49 +16,69 @@ namespace Llaumgui\JunitXml;
 class JunitXmlTestSuitesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test if the new JunitXmlTestSuites is good.
+     * Test JunitXmlTestSuites generation.
      *
      * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::__construct
      * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::getXml
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::finish
      */
-    public function testEmptyTestSuitesBuild()
+    public function testJunitXmlTestSuitesConstructor()
     {
+        // Test empty call
+        $expectedXml = '<?xml version="1.0"?>'
+            . '<testsuites time="' . DEFAULT_TIME_VALUE . '" />';
         $testSuites = new JunitXmlTestSuites();
-        $resultXml = '<?xml version="1.0"?><testsuites/>';
+        $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($testSuites->getXml(), $resultXml);
+        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" without parameter mismatch expected.");
+        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" without parameter.");
+
+        // Test call with param
+        $expectedXml = '<?xml version="1.0"?>'
+            . '<testsuites name="J Unit !" time="' . DEFAULT_TIME_VALUE . '" />';
+        $testSuites = new JunitXmlTestSuites('J Unit !');
+        $actualXml = $testSuites->getXml();
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with parameter mismatch expected.");
+        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" without parameter.");
     }
 
 
     /**
-     * Test if getXML return a string.
+     * Test JunitXmlTestSuites manipulation.
      *
      * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::__construct
      * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::getXml
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::finish
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::incTests
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::incFailures
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::incErrors
+     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::incDisabled
      */
-    public function testTestSuitesBuildXmlIsString()
+    public function testJunitXmlTestSuitesInc()
     {
+        // Test call with param & increments
+        $expectedXml = '<?xml version="1.0"?>'
+            . '<testsuites name="J Unit !" disabled="2" errors="3" failures="4" tests="5" time="' . DEFAULT_TIME_VALUE . '" />';
+        $testSuites = new JunitXmlTestSuites('J Unit !');
+        $testSuites->incTests(5);
+        $testSuites->incFailures(4);
+        $testSuites->incErrors(3);
+        $testSuites->incDisabled(2);
+        $actualXml = $testSuites->getXml();
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with datas mismatch expected.");
+        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" with datas.");
+
+        // Test call with param & increments
+        $expectedXml = '<?xml version="1.0"?>'
+            . '<testsuites failures="1" tests="0" time="0" />';
         $testSuites = new JunitXmlTestSuites();
+        $testSuites->incTests(0);
+        $testSuites->incFailures();
+        $actualXml = $testSuites->getXml();
 
-        $this->assertTrue(is_string($testSuites->getXml()));
-    }
-
-
-    /**
-     * Test if getXML return a string.
-     *
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::__construct
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::getXml
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::addTestSuite
-     */
-    public function testSAddTestSuiteToTestSuites()
-    {
-        $testSuites = new JunitXmlTestSuites();
-        $testSuites->addTestSuite();
-        $testSuites->addTestSuite();
-
-        $resultXml = '<?xml version="1.0"?><testsuites><testsuite/><testsuite/></testsuites>';
-
-        $this->assertXmlStringEqualsXmlString($testSuites->getXml(), $resultXml);
+        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with special datas mismatch expected.");
+        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" with special datas.");
     }
 }
