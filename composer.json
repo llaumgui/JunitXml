@@ -4,10 +4,15 @@
   "description": "PHP library for generate XML document in JUnit format.",
   "keywords": ["junit", "xml"],
   "license": "MIT",
+  "homepage": "https://github.com/llaumgui/JunitXml",
+  "support": {
+    "issues": "https://github.com/llaumgui/JunitXml/issues",
+    "source": "https://github.com/llaumgui/JunitXml"
+  },
   "authors": [{
     "name": "Guillaume Kulakowski",
     "email": "guillaume@kulakowski.fr",
-    "homepage": "https://github.com/llaumgui/JunitXml"
+    "homepage": "http://blog.kulakowski.fr"
   }],
   "require": {
     "php": ">=5.3.3"
