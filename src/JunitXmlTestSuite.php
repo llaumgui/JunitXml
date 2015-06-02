@@ -26,45 +26,45 @@ class JunitXmlTestSuite extends JunitXmlTestElement
     /**
      * @var int
      */
-    private $tests = 0;
+    protected $tests = 0;
     /**
      * @var int
      */
-    private $failures;
+    protected $failures;
     /**
      * @var int
      */
-    private $disabled;
+    protected $disabled;
     /**
      * @var int
      */
-    private $errors;
+    protected $errors;
     /**
      * @var int
      */
-    private $skipped;
+    protected $skipped;
     /**
      * @var string
      */
-    private $timestamp;
+    protected $timestamp;
     /**
      * @var string
      */
-    private $hostname;
+    protected $hostname;
     /**
      * @var string
      */
-    private $id;
+    protected $id;
     /**
      * @var string
      */
-    private $package;
+    protected $package;
 
 
     /**
      * Constructor.
      *
-     * @param JunitXmlTestSuite $mainTestSuite.
+     * @param JunitXmlTestSuites The JunitXmlTestSuites.
      */
     public function __construct(JunitXmlTestSuites $testSuites)
     {
@@ -101,30 +101,16 @@ class JunitXmlTestSuite extends JunitXmlTestElement
          * Update JunitXmlTestSuites
          */
         $this->testSuites->incTests($this->tests);
-        // Optional elements
-        foreach (array('disabled','errors','failures') as $attribute) {
-            if (is_int($this->$attribute)) {
-                $this->testSuites->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
-
+        $this->incParentElementAttribute($this->testSuites, array('disabled', 'errors', 'failures'));
 
         /*
          * Update JunitXmlTestSuite
          */
-        // Optional string elements
-        foreach (array('timestamp', 'hostname', 'id', 'package') as $attribute) {
-            if (!empty($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
-        // Optional int elements
-        foreach (array('disabled','errors','failures', 'skipped') as $attribute) {
-            if (is_int($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
+        // Optional attributes
+        $this->setOptionalStringElementAttribute(array('timestamp', 'hostname', 'id', 'package'));
+        $this->setOptionalIntElementAttribute(array('disabled','errors','failures', 'skipped'));
 
+        // Others attributes
         $this->setElementAttribute('name', $this->name);
         $this->setElementAttribute('tests', $this->tests);
         $this->setElementAttribute('time', $this->getExecTime());

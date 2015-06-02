@@ -79,6 +79,57 @@ abstract class JunitXmlTestElement
 
 
     /**
+     * Set the optional string attributes.
+     *
+     * @param array $attributes List of optionnals attributes.
+     */
+    protected function setOptionalStringElementAttribute(array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if (!empty($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+    }
+
+
+    /**
+     * Set the optional integer attributes.
+     *
+     * @param array $attributes List of optionnals attributes.
+     */
+    protected function setOptionalIntElementAttribute(array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if (is_int($this->$attribute)) {
+                $this->setElementAttribute($attribute, $this->$attribute);
+            }
+        }
+    }
+
+
+    /**
+     * Increment the optional integer attributes.
+     *
+     * @param \Llaumgui\JunitXml\JunitXmlTestElement $parent     Parent element.
+     * @param array                                  $attributes List of optionnals attributes.
+     */
+    protected function incParentElementAttribute(JunitXmlTestElement $parent, array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            // With "s" VS whitout "s" fix
+            $parentAttribute = $attribute;
+            if ($attribute == 'failure' or $attribute == 'error') {
+                $parentAttribute = $attribute . 's';
+            }
+            if (is_int($this->$attribute)) {
+                call_user_func(array($parent, 'inc' . ucfirst($parentAttribute)), $this->$attribute);
+            }
+        }
+    }
+
+
+    /**
      * Get $xmlTestSuite.
      *
      * @return DOMElement.

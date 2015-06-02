@@ -22,31 +22,31 @@ class JunitXmlTestCase extends JunitXmlTestElement
     /**
      * @var JunitXmlTestSuite
      */
-    private $testSuite;
+    public $testSuite;
     /**
      * @var int
      */
-    private $assertions;
+    protected $assertions;
     /**
      * @var int
      */
-    private $error;
+    protected $error = 0;
     /**
      * @var int
      */
-    private $skipped;
+    protected $skipped = 0;
     /**
      * @var int
      */
-    private $failure;
+    protected $failure = 0;
     /**
      * @var string
      */
-    private $classname;
+    protected $classname;
     /**
      * @var string
      */
-    private $status;
+    protected $status;
 
 
     /**
@@ -72,28 +72,17 @@ class JunitXmlTestCase extends JunitXmlTestElement
          * Update JunitXmlTestSuite
          */
         $this->testSuite->incTests();
-        foreach (array('skipped', 'error', 'failure') as $attribute) {
-            if (is_int($this->$attribute)) {
-                call_user_func(array($this->testSuite, 'inc' . ucfirst($attribute) . 's'), $this->$attribute);
-            }
-        }
-        // @TODO Add other increments.
+        $this->incParentElementAttribute($this->testSuite, array('skipped', 'error', 'failure'));
+
 
         /*
          * Update JunitXmlTestCase
          */
-        // Optional string elements
-        foreach (array('name', 'classname', 'status') as $attribute) {
-            if (!empty($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
-        // Optional int elements
-        foreach (array('assertions', 'skipped', 'error', 'failure') as $attribute) {
-            if (is_int($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
+        // Optional attributes
+        $this->setOptionalStringElementAttribute(array('name', 'classname', 'status'));
+        $this->setOptionalIntElementAttribute(array('assertions'));
+
+        // Others attributes
         $this->setElementAttribute('time', $this->getExecTime());
     }
 
@@ -114,10 +103,34 @@ class JunitXmlTestCase extends JunitXmlTestElement
         }
         $element->nodeValue = $message;
 
-        $this->$name++;
+        if (isset($this->$name)) {
+            $this->$name++;
+        }
     }
 
 
+    /**
+     * Set the status.
+     *
+     * @param type $status Status.
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+
+    /**
+     * Set the class name.
+     *
+     * @param type $classname Class name.
+     */
+    public function setClassName($classname)
+    {
+        $this->classname = $classname;
+    }
+
+    
     /**
      * Add an error
      *
@@ -160,5 +173,26 @@ class JunitXmlTestCase extends JunitXmlTestElement
     public function incAssertions($inc = 1)
     {
         $this->assertions = $inc;
+    }
+
+
+    /**
+     * Set system-out attribute.
+     *
+     * @param string $message the message.
+     */
+    public function addStdOut($message)
+    {
+        $this->addDomElement('system-out', $message);
+    }
+
+    /**
+     * Set system-err attribute.
+     *
+     * @param string $message the message.
+     */
+    public function addStdErr($message)
+    {
+        $this->addDomElement('system-err', $message);
     }
 }

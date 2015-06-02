@@ -26,19 +26,19 @@ class JunitXmlTestSuites extends JunitXmlTestElement
     /**
      * @var int
      */
-    private $tests = false;
+    protected $tests = false;
     /**
      * @var int
      */
-    private $failures = false;
+    protected $failures = false;
     /**
      * @var int
      */
-    private $disabled = false;
+    protected $disabled = false;
     /**
      * @var int
      */
-    private $errors = false;
+    protected $errors = false;
 
 
     /**
@@ -79,19 +79,11 @@ class JunitXmlTestSuites extends JunitXmlTestElement
      */
     private function finish()
     {
-        // Optional string elements
-        foreach (array('name') as $attribute) {
-            if (!empty($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
-        // Optional int elements
-        foreach (array('tests','disabled','errors','failures') as $attribute) {
-            if (is_int($this->$attribute)) {
-                $this->setElementAttribute($attribute, $this->$attribute);
-            }
-        }
+        // Optional attributes
+        $this->setOptionalStringElementAttribute(array('name'));
+        $this->setOptionalIntElementAttribute(array('tests', 'disabled', 'errors', 'failures'));
 
+        // Others attributes
         $this->setElementAttribute('time', $this->getExecTime());
     }
 
