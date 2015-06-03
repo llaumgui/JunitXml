@@ -112,7 +112,7 @@ class JunitXmlTestCase extends JunitXmlTestElement
     /**
      * Set the status.
      *
-     * @param type $status Status.
+     * @param string $status Status.
      */
     public function setStatus($status)
     {
@@ -123,14 +123,14 @@ class JunitXmlTestCase extends JunitXmlTestElement
     /**
      * Set the class name.
      *
-     * @param type $classname Class name.
+     * @param string $classname Class name.
      */
     public function setClassName($classname)
     {
         $this->classname = $classname;
     }
 
-    
+
     /**
      * Add an error
      *

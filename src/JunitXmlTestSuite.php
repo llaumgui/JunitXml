@@ -175,7 +175,7 @@ class JunitXmlTestSuite extends JunitXmlTestElement
     /**
      * Set testsuite id.
      *
-     * @param string $package The testsuite id.
+     * @param string $id The testsuite id.
      */
     public function setId($id)
     {

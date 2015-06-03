@@ -58,7 +58,7 @@ abstract class JunitXmlTestElement
     /**
      * Set Name.
      *
-     * @param string $name.
+     * @param string $name
      */
     public function setName($name)
     {
