@@ -10,6 +10,8 @@
 
 namespace Tests\Llaumgui\JunitXml;
 
+use Llaumgui\JunitXml\JunitXmlTestSuites;
+
 /**
  * The JunitXml class.
  */
