@@ -4,62 +4,18 @@
 PHP library for generate XML document in JUnit format.
 
 
-## Installation
-~~~php
-composer require 'llaumgui/junit-xml:dev-master'
-~~~
+## Documentation
+* For documentation, see [JunitXml documentation](https://llaumgui.github.io/JunitXml/).
+* For API documentation, see [JunitXml API documentation](https://llaumgui.github.io/JunitXml/apigen).
 
 
-## API documentation
-See [JunitXml API Documentation](https://llaumgui.github.io/JunitXml/).
+## Quick how to install
+With [composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx), run:
 
-
-## Usage
-* Create a new *TestSuites*:
-~~~php
-$testSuites = new JunitXmlTestSuites('My testsuites');
-~~~
-* Add a *TestSuite* to the *TestSuites*:
-~~~php
-$testSuite1 = $testSuites->addTestSuite('My testsuite #1');
-~~~
-* Add a *TestCase* to the *TestSuite*:
-~~~php
-$test1 = $testSuite1->addTest('Check if blabla is good');
-~~~
-* Increment the *assertion* number of the *TestCase*:
-~~~php
-$test1->incAssertions();
-~~~
-* Mark test as *skipped*:
-~~~php
-$test1->addSkipped('Skipped because blabla.');
-~~~
-* Mark test in error:
-~~~php
-$test1->addError('Error message', 'error_type');
-~~~
-* Mark test as fail:
-~~~php
-$test1->addFailure('Fail message', 'fail_type');
-~~~
-* Finish and close test:
-~~~php
-$test1->finish();
-~~~
-* Finish and close TestSuite:
-~~~php
-$testSuite->finish();
-~~~
-* Finish, close and get XML of the TestSuites:
-~~~php
-$testSuites->getXml();
-~~~
-
-* For full documentation: see [JunitXml API Documentation](https://llaumgui.github.io/JunitXml/)
-* For full exemple: see  [tests/JunitXmlTestCaseTest.php](https://github.com/llaumgui/JunitXml/blob/master/tests/JunitXmlTestCaseTest.php)
+```bash
+$ php composer.phar require llaumgui/junit-xml
+```
 
 
 ## License
 Released under the [MIT license](http://www.opensource.org/licenses/MIT).
-
