@@ -3,7 +3,6 @@
     <description>The coding standard for JunitXml</description>
 
     <file>./src/</file>
-    <file>./tests/</file>
 
     <arg name="report" value="full"/>
     <rule ref="PSR2"/>
