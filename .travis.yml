@@ -1,9 +1,6 @@
 sudo: false
 language: php
 php:
-  - 5.3
-  - 5.3
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
@@ -11,10 +8,8 @@ php:
   - nightly
 matrix:
   allow_failures:
-    - php: 7.0
     - php: hhvm
     - php: nightly
-
 
 before_install:
   # Update composer binary
@@ -33,7 +28,3 @@ after_script:
   - if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then ./vendor/bin/test-reporter; fi
   # ApiGen generation
   - if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh generate-api.sh; fi
-
-env:
-  global:
-    secure: mKk20bdLrNU56z9ocgiMBMgjsxeNzYVMwmaTrRhLi/2UKDHLL56PqW3DJSBcwehoZy6fWPVtpD5X74124FqgWK+q/XkqUuWVF9EY00ZKCE9d5AA9XSu45BLisB+h5ZZGdGSIGQwAVECawXTsrARdcnqPt1/dyOYMYEARwS1bYzV8d2bpJa9Kn7vy5SpUzbHRggbEANncTeWrMewajaXX2HR424vj9hxWhpHBNRErz11rgS39Wul/N+Bll4qA9VgFYO9JPrTfrllgyPzTnNVws94kWIAin7jveA9lolDTusPth0nbqxB0wgHyh32NlIjDxxrwMqTsax/uvsrhTRo4XJuMN5WVBAy8GIB0QRTrrYmwGiKUSdKbZLQ5KskMaLa19KZ2ahZLVdnC/rtl94f9ZiQnX3Q65OGS4FoFNzYdesiuM4tgIzWQiJuN3oQ9bDtR5W5Y9265wWDDU4Efm3lpLEplq0LoKNR1pju0MSp1HRllStkdmhNjMA8i4yspuHYN3TbhNj3YwqU4oVp7ctVTUlTow81RBVMIsCt7L31SWs1tvYJnggAvj+pnKn/uoLOmmuKVhRbrfQGDChmOhHcbVPWNOM0DYBtmgSkkQfQ3lUi8qO5LwHw3LY61d4IhTl/2tBMKKJdJF6d8F6bMVk5qN8WdKxbJVu0dNSLflOEaf44=
