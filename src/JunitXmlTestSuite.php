@@ -101,14 +101,14 @@ class JunitXmlTestSuite extends JunitXmlTestElement
          * Update JunitXmlTestSuites
          */
         $this->testSuites->incTests($this->tests);
-        $this->incParentElementAttribute($this->testSuites, array('disabled', 'errors', 'failures'));
+        $this->incParentElementAttribute($this->testSuites, ['disabled', 'errors', 'failures']);
 
         /*
          * Update JunitXmlTestSuite
          */
         // Optional attributes
-        $this->setOptionalStringElementAttribute(array('timestamp', 'hostname', 'id', 'package'));
-        $this->setOptionalIntElementAttribute(array('disabled','errors','failures', 'skipped'));
+        $this->setOptionalStringElementAttribute(['timestamp', 'hostname', 'id', 'package']);
+        $this->setOptionalIntElementAttribute(['disabled','errors','failures', 'skipped']);
 
         // Others attributes
         $this->setElementAttribute('name', $this->name);
