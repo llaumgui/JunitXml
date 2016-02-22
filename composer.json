@@ -19,11 +19,16 @@
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",
-    "codeclimate/php-test-reporter": "dev-master",
+    "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
     "psr-4": {
       "Llaumgui\\JunitXml\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Llaumgui\\JunitXml\\": "tests/"
     }
   }
 }

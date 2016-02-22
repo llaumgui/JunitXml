@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+namespace Tests\Llaumgui\JunitXml;
+
 /**
  * Remove time in XML output.
  *

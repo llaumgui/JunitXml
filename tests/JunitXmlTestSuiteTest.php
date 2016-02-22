@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Llaumgui\JunitXml;
+namespace Tests\Llaumgui\JunitXml;
 
 /**
  * The JunitXml class.
