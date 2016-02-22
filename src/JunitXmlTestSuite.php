@@ -2,7 +2,7 @@
 /*
  * This file is part of the JunitXml package.
  *
- * (c) Guillaume Kulakowski <guillaume@kulakowski.fr>
+ * Copyright (C) 2015-2016 Guillaume Kulakowski <guillaume@kulakowski.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -175,7 +175,7 @@ class JunitXmlTestSuite extends JunitXmlTestElement
     /**
      * Set testsuite id.
      *
-     * @param string $package The testsuite id.
+     * @param string $id The testsuite id.
      */
     public function setId($id)
     {
