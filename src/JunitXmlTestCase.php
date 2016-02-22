@@ -72,15 +72,15 @@ class JunitXmlTestCase extends JunitXmlTestElement
          * Update JunitXmlTestSuite
          */
         $this->testSuite->incTests();
-        $this->incParentElementAttribute($this->testSuite, array('skipped', 'error', 'failure'));
+        $this->incParentElementAttribute($this->testSuite, ['skipped', 'error', 'failure']);
 
 
         /*
          * Update JunitXmlTestCase
          */
         // Optional attributes
-        $this->setOptionalStringElementAttribute(array('name', 'classname', 'status'));
-        $this->setOptionalIntElementAttribute(array('assertions'));
+        $this->setOptionalStringElementAttribute(['name', 'classname', 'status']);
+        $this->setOptionalIntElementAttribute(['assertions']);
 
         // Others attributes
         $this->setElementAttribute('time', $this->getExecTime());

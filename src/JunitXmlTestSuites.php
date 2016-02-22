@@ -80,8 +80,8 @@ class JunitXmlTestSuites extends JunitXmlTestElement
     private function finish()
     {
         // Optional attributes
-        $this->setOptionalStringElementAttribute(array('name'));
-        $this->setOptionalIntElementAttribute(array('tests', 'disabled', 'errors', 'failures'));
+        $this->setOptionalStringElementAttribute(['name']);
+        $this->setOptionalIntElementAttribute(['tests', 'disabled', 'errors', 'failures']);
 
         // Others attributes
         $this->setElementAttribute('time', $this->getExecTime());

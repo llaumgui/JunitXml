@@ -123,7 +123,7 @@ abstract class JunitXmlTestElement
                 $parentAttribute = $attribute . 's';
             }
             if (is_int($this->$attribute)) {
-                call_user_func(array($parent, 'inc' . ucfirst($parentAttribute)), $this->$attribute);
+                call_user_func([$parent, 'inc' . ucfirst($parentAttribute)], $this->$attribute);
             }
         }
     }
