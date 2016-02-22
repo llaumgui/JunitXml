@@ -119,7 +119,7 @@ abstract class JunitXmlTestElement
         foreach ($attributes as $attribute) {
             // With "s" VS whitout "s" fix
             $parentAttribute = $attribute;
-            if ($attribute == 'failure' or $attribute == 'error') {
+            if ($attribute == 'failure' || $attribute == 'error') {
                 $parentAttribute = $attribute . 's';
             }
             if (is_int($this->$attribute)) {
