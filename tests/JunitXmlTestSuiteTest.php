@@ -10,12 +10,13 @@
 
 namespace Tests\Llaumgui\JunitXml;
 
+use Tests\Llaumgui\JunitXml\PhpUnitHelper;
 use Llaumgui\JunitXml\JunitXmlTestSuites;
 
 /**
  * The JunitXml class.
  */
-class JunitXmlTestSuiteTest extends \PHPUnit_Framework_TestCase
+class JunitXmlTestSuiteTest extends PhpUnitHelper
 {
     /**
      * Test adding testsuite to a testsuites.
@@ -47,10 +48,10 @@ class JunitXmlTestSuiteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertXmlStringEqualsXmlString(
             $expectedXml,
-            getTestableXmlOutput($actualXml),
+            self::getTestableXmlOutput($actualXml),
             "XML generated for simple \"testsuite\" mismatch expected."
         );
-        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for simple \"testsuite\".");
+        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for simple \"testsuite\".");
 
 
         // Test complexe call
@@ -75,7 +76,7 @@ class JunitXmlTestSuiteTest extends \PHPUnit_Framework_TestCase
 
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for complexe \"testsuite\" mismatch expected.");
-        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for complexe \"testsuite\".");
+        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for complexe \"testsuite\" mismatch expected.");
+        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for complexe \"testsuite\".");
     }
 }
