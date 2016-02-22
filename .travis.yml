@@ -23,11 +23,9 @@ before_install:
 before_script:
   # Install require & require-dev
   - composer install --prefer-source
-  # Install build tools but no dev tools
-  - composer require squizlabs/php_codesniffer codeclimate/php-test-reporter:dev-master
 
 script:
-  - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml
+  - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml --coverage-html build/coverage
   - ./vendor/bin/phpcs
 
 after_script:
