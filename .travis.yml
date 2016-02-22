@@ -20,7 +20,7 @@ before_script:
   - composer install --prefer-source
 
 script:
-  - phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml --coverage-html build/coverage
+  - ./vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml --coverage-html build/coverage
   - ./vendor/bin/phpcs
 
 after_script:
