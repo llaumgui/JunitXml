@@ -15,13 +15,21 @@
     "homepage": "http://blog.kulakowski.fr"
   }],
   "require": {
-    "php": ">=5.3.3"
+    "php": ">=5.5.9"
   },
   "require-dev": {
+    "phpunit/phpunit": "^4",
+    "squizlabs/php_codesniffer": "2.*",
+    "codeclimate/php-test-reporter": "dev-master"
   },
   "autoload": {
     "psr-4": {
       "Llaumgui\\JunitXml\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Llaumgui\\JunitXml\\": "tests/"
     }
   }
 }

@@ -8,9 +8,12 @@
          backupGlobals="false"
          colors="true"
          stopOnFailure="false"
-         bootstrap="tests/bootstrap.php">
+         bootstrap="vendor/autoload.php">
     <php>
         <ini name="error_reporting" value="-1" />
+        <const name="JUNIT4_XSD_PATH" value="./tests/junit-4.xsd"/>
+        <const name="DEFAULT_TIME_VALUE" value="0"/>
+        <const name="DEFAULT_TIMESTAMP_VALUE" value="2015-05-21T09:30:00+02:00"/>
     </php>
 
     <testsuites>
@@ -21,7 +24,7 @@
 
     <filter>
         <whitelist>
-            <directory>./</directory>
+            <directory>./src</directory>
             <exclude>
                 <directory>./tests</directory>
                 <directory>./vendor</directory>

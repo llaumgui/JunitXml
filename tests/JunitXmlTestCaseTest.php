@@ -2,18 +2,21 @@
 /*
  * This file is part of the JunitXml package.
  *
- * (c) Guillaume Kulakowski <guillaume@kulakowski.fr>
+ * Copyright (C) 2015-2016 Guillaume Kulakowski <guillaume@kulakowski.fr>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Llaumgui\JunitXml;
+namespace Tests\Llaumgui\JunitXml;
+
+use Tests\Llaumgui\JunitXml\PhpUnitHelper;
+use Llaumgui\JunitXml\JunitXmlTestSuites;
 
 /**
  * The JunitXml class.
  */
-class JunitXmlTestCaseTest extends \PHPUnit_Framework_TestCase
+class JunitXmlTestCaseTest extends PhpUnitHelper
 {
     /**
      * Test JunitXmlTestSuites generation.
@@ -92,7 +95,7 @@ class JunitXmlTestCaseTest extends \PHPUnit_Framework_TestCase
 
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, getTestableXmlOutput($actualXml), "XML generated for full mismatch expected.");
-        $this->assertTrue(validateXsdFromString($actualXml), "Unvalide XML generated for full test.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for full mismatch expected.");
+        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for full test.");
     }
 }
