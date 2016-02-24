@@ -42,18 +42,4 @@ class PhpUnitHelper extends \PHPUnit_Framework_TestCase
 
         return $xmlDocument->saveXML();
     }
-
-    /**
-     * Validate XML string with JUnit XSD.
-     *
-     * @param string $xml XML output.
-     * @return boolean Is valide ?
-     */
-    protected static function validateXsdFromString($xml)
-    {
-        $xmlDocument = new \DOMDocument();
-        $xmlDocument->loadXML($xml);
-
-        return $xmlDocument->schemaValidate(\JUNIT4_XSD_PATH);
-    }
 }

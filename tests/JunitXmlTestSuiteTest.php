@@ -12,6 +12,7 @@ namespace Tests\Llaumgui\JunitXml;
 
 use Tests\Llaumgui\JunitXml\PhpUnitHelper;
 use Llaumgui\JunitXml\JunitXmlTestSuites;
+use Llaumgui\JunitXml\JunitXmlValidation;
 
 /**
  * The JunitXml class.
@@ -20,19 +21,6 @@ class JunitXmlTestSuiteTest extends PhpUnitHelper
 {
     /**
      * Test adding testsuite to a testsuites.
-     *
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuites::addTestSuite
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::__construct
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::setName
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::incTests
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::incErrors
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::incFailures
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::incDisabled
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::incSkipped
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::setId
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::setPackage
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::setHostname
-     * @covers            \Llaumgui\JunitXml\JunitXmlTestSuite::finish
      */
     public function testJunitXmlTestSuiteGeneration()
     {
@@ -51,7 +39,7 @@ class JunitXmlTestSuiteTest extends PhpUnitHelper
             self::getTestableXmlOutput($actualXml),
             "XML generated for simple \"testsuite\" mismatch expected."
         );
-        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for simple \"testsuite\".");
+        $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for simple \"testsuite\".");
 
 
         // Test complexe call
@@ -77,6 +65,6 @@ class JunitXmlTestSuiteTest extends PhpUnitHelper
         $actualXml = $testSuites->getXml();
 
         $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for complexe \"testsuite\" mismatch expected.");
-        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for complexe \"testsuite\".");
+        $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for complexe \"testsuite\".");
     }
 }

@@ -12,6 +12,7 @@ namespace Tests\Llaumgui\JunitXml;
 
 use Tests\Llaumgui\JunitXml\PhpUnitHelper;
 use Llaumgui\JunitXml\JunitXmlTestSuites;
+use Llaumgui\JunitXml\JunitXmlValidation;
 
 /**
  * The JunitXml class.
@@ -96,6 +97,6 @@ class JunitXmlTestCaseTest extends PhpUnitHelper
         $actualXml = $testSuites->getXml();
 
         $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for full mismatch expected.");
-        $this->assertTrue(self::validateXsdFromString($actualXml), "Unvalide XML generated for full test.");
+        $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for full test.");
     }
 }
