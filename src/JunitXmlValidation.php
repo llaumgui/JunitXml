@@ -45,12 +45,12 @@ class JunitXmlValidation
 
         // Reset time
         foreach ($xmlDocument->getElementsByTagName('testsuites') as $testsuites) {
-                $testsuites->setAttribute('time', '2015-05-21T09:30:00+02:0');
+                $testsuites->setAttribute('time', '0');
         }
         foreach ($xmlDocument->getElementsByTagName('testsuite') as $testsuite) {
-            $testsuite->setAttribute('time', '2015-05-21T09:30:00+02:0');
+            $testsuite->setAttribute('time', '0');
             if ($testsuite->hasAttribute('timestamp')) {
-                $testsuite->setAttribute('timestamp', '0');
+                $testsuite->setAttribute('timestamp', '2015-05-21T09:30:00+02:00');
             }
         }
         foreach ($xmlDocument->getElementsByTagName('testcase') as $testcase) {
