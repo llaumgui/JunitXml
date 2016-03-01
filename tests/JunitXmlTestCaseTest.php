@@ -96,7 +96,7 @@ class JunitXmlTestCaseTest extends PhpUnitHelper
 
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for full mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for full mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for full test.");
     }
 }

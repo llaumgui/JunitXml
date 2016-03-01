@@ -30,7 +30,7 @@ class JunitXmlTestSuitesTest extends PhpUnitHelper
         $testSuites = new JunitXmlTestSuites();
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" without parameter mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" without parameter mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" without parameter.");
 
         // Test call with param
@@ -39,7 +39,7 @@ class JunitXmlTestSuitesTest extends PhpUnitHelper
         $testSuites = new JunitXmlTestSuites('J Unit !');
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with parameter mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with parameter mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" without parameter.");
     }
 
@@ -67,7 +67,7 @@ class JunitXmlTestSuitesTest extends PhpUnitHelper
         $testSuites->incDisabled(2);
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with datas mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with datas mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" with datas.");
 
         // Test call with param & increments
@@ -78,7 +78,7 @@ class JunitXmlTestSuitesTest extends PhpUnitHelper
         $testSuites->incFailures();
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with special datas mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for \"testsuites\" with special datas mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for \"testsuites\" with special datas.");
     }
 }

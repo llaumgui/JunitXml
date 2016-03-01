@@ -36,7 +36,7 @@ class JunitXmlTestSuiteTest extends PhpUnitHelper
 
         $this->assertXmlStringEqualsXmlString(
             $expectedXml,
-            self::getTestableXmlOutput($actualXml),
+            JunitXmlValidation::getTestableXmlOutput($actualXml),
             "XML generated for simple \"testsuite\" mismatch expected."
         );
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for simple \"testsuite\".");
@@ -64,7 +64,7 @@ class JunitXmlTestSuiteTest extends PhpUnitHelper
 
         $actualXml = $testSuites->getXml();
 
-        $this->assertXmlStringEqualsXmlString($expectedXml, self::getTestableXmlOutput($actualXml), "XML generated for complexe \"testsuite\" mismatch expected.");
+        $this->assertXmlStringEqualsXmlString($expectedXml, JunitXmlValidation::getTestableXmlOutput($actualXml), "XML generated for complexe \"testsuite\" mismatch expected.");
         $this->assertTrue(JunitXmlValidation::validateXsdFromString($actualXml), "Unvalide XML generated for complexe \"testsuite\".");
     }
 }
