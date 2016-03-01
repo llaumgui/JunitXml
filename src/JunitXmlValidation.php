@@ -18,10 +18,10 @@ namespace Llaumgui\JunitXml;
 class JunitXmlValidation
 {
     /**
-     * Validate XML string with JUnit XSD.
+     * Validate an XML string with JUnit XSD.
      *
      * @param string $xml XML output.
-     * @return boolean Is valide ?
+     * @return boolean True if the XML is validated by the XSD.
      */
     public static function validateXsdFromString($xml)
     {
@@ -33,7 +33,7 @@ class JunitXmlValidation
 
 
     /**
-     * Remove time in XML output.
+     * Normalize time and timestamp in XML output.
      *
      * @param string $xml XML output.
      * @return string Modified XML output.

@@ -54,6 +54,9 @@ menu:
                 usage:
                     text: Usage
                     relativeUrl: doc/usage.html
+                testing:
+                    text: Testing
+                    relativeUrl: doc/testing.html
                 examples:
                     text: Examples
                     relativeUrl: doc/examples.html
