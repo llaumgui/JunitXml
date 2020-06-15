@@ -22,7 +22,7 @@
     "squizlabs/php_codesniffer": "2.*"
   },
   "scripts": {
-    "test:phpunit": "vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text --coverage-clover build/logs/clover.xml --coverage-html build/coverage",
+    "test:phpunit": "vendor/bin/phpunit --configuration phpunit.xml.dist",
     "test:phpcs": "vendor/bin/phpcs",
     "test": [
       "@test:phpunit",
