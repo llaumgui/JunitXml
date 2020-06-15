@@ -1,9 +1,10 @@
-name: CI/CD
+name: PHP CI/CD
 
 on:
   [push, pull_request]
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     name: Build and test
 
@@ -28,3 +29,62 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+  
+    - name: SonarCloud Scan
+      if: matrix.php-version == '7.4'
+      uses: sonarsource/sonarcloud-github-action@master
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: markdownlint-cli
+      if: matrix.php-version == '7.4'
+      uses: nosborn/github-action-markdown-cli@v1.1.1
+      with:
+        files: "*.md docs/*.md"
+        config_file: ".markdownlint.yaml"
+
+    - uses: CouscousPHP/GitHub-Action@v1
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+
+    - name: Deploy Couscous
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./.couscous/generated
+        force_orphan: true
+        commit_message: 'Publish Couscous website'
+
+    - name: ApiGen PHP Document Generator
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      uses: varunsridharan/action-apigen@2.0
+      with:
+        before_cmd: 'mkdir -p apigen/apigen'
+        cached_apigen: 'no'
+        output_folder: 'apigen/apigen'
+        source_folder: 'src'
+        auto_push: 'no'          
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish ApiGen
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: 'apigen'
+        keep_files: true
+        commit_message: 'Publish APIGen documentation'
+
+    - name: Publish codecoverage
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: 'build'
+        keep_files: true
+        commit_message: 'Publish codecoverage'
