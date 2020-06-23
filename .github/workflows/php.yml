@@ -24,11 +24,15 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: Install dependencies
+    - name: Install PHP dependencies
       run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
 
     - name: Run test suite
       run: composer run-script test
+  
+    - name: Fix code coverage paths for Sonar
+      working-directory: ./build/reports/
+      run: sed -i 's/\/home\/runner\/work\/JunitXml\/JunitXml\//\/github\/workspace\//g' phpunit.coverage.xml
   
     - name: SonarCloud Scan
       if: matrix.php-version == '7.4'
@@ -40,7 +44,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    - name: markdownlint-cli
+    - name: Markdown lint
       if: matrix.php-version == '7.4'
       uses: nosborn/github-action-markdown-cli@v1.1.1
       with:
@@ -50,7 +54,7 @@ jobs:
     - uses: CouscousPHP/GitHub-Action@v1
       if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
 
-    - name: Deploy Couscous
+    - name: Deploy Couscous website
       if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -59,7 +63,7 @@ jobs:
         force_orphan: true
         commit_message: 'Publish Couscous website'
 
-    - name: ApiGen PHP Document Generator
+    - name: Build ApiGen PHP Document Generator
       if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
       uses: varunsridharan/action-apigen@2.0
       with:
