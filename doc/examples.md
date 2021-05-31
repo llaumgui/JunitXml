@@ -3,7 +3,7 @@ currentMenu: examples
 ---
 
 # Example
-* You can find an example in [JunitXmlTestCaseTest](https://github.com/llaumgui/JunitXml/blob/master/tests/JunitXmlTestCaseTest.php).
+* You can find an example in [JunitXmlTestCaseTest](https://github.com/llaumgui/JunitXml/blob/main/tests/JunitXmlTestCaseTest.php).
 * You can also look at the [CheckToolsFramework](https://github.com/llaumgui/CheckToolsFramework) project for a full implementation of JunitXml:
 
 ```php

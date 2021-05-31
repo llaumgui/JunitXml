@@ -52,10 +52,10 @@ jobs:
         config_file: ".markdownlint.yaml"
 
     - uses: CouscousPHP/GitHub-Action@v1
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
 
     - name: Deploy Couscous website
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
         commit_message: 'Publish Couscous website'
 
     - name: Build ApiGen PHP Document Generator
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
       uses: varunsridharan/action-apigen@2.0
       with:
         before_cmd: 'mkdir -p apigen/apigen'
@@ -76,7 +76,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Publish ApiGen
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -85,7 +85,7 @@ jobs:
         commit_message: 'Publish APIGen documentation'
 
     - name: Publish codecoverage
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/master'
+      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

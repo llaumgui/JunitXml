@@ -3,7 +3,7 @@ source:
 destination: gh-pages/apigen
 
 templateTheme: bootstrap
-title: "JunitXml API Documentation (master)"
+title: "JunitXml API Documentation (main)"
 tree: Yes
 download: No
 todo: Yes
