@@ -3,6 +3,9 @@ name: PHP CI/CD
 on:
   [push, pull_request]
 
+env:
+  phpLastVersion: '7.4'
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-version: [7.2, 7.3, 7.4]
+        php-version: [ 7.3, 7.4 ]
 
     steps:
     - name: Git checkout
@@ -22,20 +25,29 @@ jobs:
         php-version: ${{ matrix.php-version }}
 
     - name: Validate composer.json and composer.lock
-      run: composer validate
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
 
     - name: Install PHP dependencies
       run: composer install --prefer-dist --no-progress --no-suggest --no-scripts
 
     - name: Run test suite
       run: composer run-script test
-  
+
     - name: Fix code coverage paths for Sonar
       working-directory: ./build/reports/
       run: sed -i 's/\/home\/runner\/work\/JunitXml\/JunitXml\//\/github\/workspace\//g' phpunit.coverage.xml
-  
+
     - name: SonarCloud Scan
-      if: matrix.php-version == '7.4'
+      if: matrix.php-version == ${{ env.phpLastVersion }}
       uses: sonarsource/sonarcloud-github-action@master
       with:
         # Disabling shallow clone is recommended for improving relevancy of reporting
@@ -45,50 +57,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     - name: Markdown lint
-      if: matrix.php-version == '7.4'
+      if: matrix.php-version == ${{ env.phpLastVersion }}
       uses: nosborn/github-action-markdown-cli@v1.1.1
       with:
         files: "*.md docs/*.md"
         config_file: ".markdownlint.yaml"
-
-    - uses: CouscousPHP/GitHub-Action@v1
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
-
-    - name: Deploy Couscous website
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./.couscous/generated
-        force_orphan: true
-        commit_message: 'Publish Couscous website'
-
-    - name: Build ApiGen PHP Document Generator
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
-      uses: varunsridharan/action-apigen@2.0
-      with:
-        before_cmd: 'mkdir -p apigen/apigen'
-        cached_apigen: 'no'
-        output_folder: 'apigen/apigen'
-        source_folder: 'src'
-        auto_push: 'no'          
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Publish ApiGen
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: 'apigen'
-        keep_files: true
-        commit_message: 'Publish APIGen documentation'
-
-    - name: Publish codecoverage
-      if: matrix.php-version == '7.4' && github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: 'build'
-        keep_files: true
-        commit_message: 'Publish codecoverage'

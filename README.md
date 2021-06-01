@@ -10,7 +10,6 @@ PHP library for generate XML document in JUnit format.
 ## Documentation
 
 * For documentation, see [JunitXml documentation](https://llaumgui.github.io/JunitXml/).
-* For API documentation, see [JunitXml API documentation](https://llaumgui.github.io/JunitXml/apigen).
 
 ## Quick how to install
 
