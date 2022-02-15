@@ -1,4 +1,4 @@
-name: PHP CI/CD
+name: Tests
 
 on:
   [push, pull_request]
