@@ -1,9 +1,15 @@
 # JunitXml
 
-[![PHP CI/CD](https://github.com/llaumgui/JunitXml/workflows/PHP%20CI/CD/badge.svg?branch=main)](https://github.com/llaumgui/JunitXml/actions?query=workflow%3A"PHP+CI%2FCD") [![SymfonyInsight](https://insight.symfony.com/projects/ce42ebfd-027c-438e-bd0c-44ecf807d473/mini.svg)](https://insight.symfony.com/projects/ce42ebfd-027c-438e-bd0c-44ecf807d473)<br />
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=main&project=llaumgui-github%3Ajunit-xml&metric=alert_status)](https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml&branch=main) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=coverage)](https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=security_rating)](https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml)<br />
-[![GitHub license](https://img.shields.io/github/license/llaumgui/JunitXml.svg)](https://github.com/llaumgui/JunitXml/blob/main/LICENSE) [![PHP version](https://badge.fury.io/ph/llaumgui%2Fjunit-xml.svg)](https://packagist.org/packages/llaumgui/junit-xml)<br />
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/llaumgui/JunitXml.svg)](http://isitmaintained.com/project/llaumgui/JunitXml "Average time to resolve an issue") [![Percentage of issues still open](http://isitmaintained.com/badge/open/llaumgui/JunitXml.svg)](http://isitmaintained.com/project/llaumgui/JunitXml "Percentage of issues still open")
+[![Author][ico-twitter]][link-twitter]
+[![Build Status][ico-ghactions]][link-ghactions]
+[![Latest Version][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE)
+
+[![Quality Gate Status][ico-sonarcloud-gate]][link-sonarcloud-gate]
+[![Coverage][ico-sonarcloud-coverage]][link-sonarcloud-coverage]
+[![Maintainability Rating][ico-sonarcloud-maintainability]][link-sonarcloud-maintainability]
+[![Reliability Rating][ico-sonarcloud-reliability]][link-sonarcloud-reliability]
+[![Security Rating][ico-sonarcloud-security]][link-sonarcloud-security]
 
 PHP library for generate XML document in JUnit format.
 
@@ -22,3 +28,22 @@ php composer.phar require llaumgui/junit-xml
 ## License
 
 Released under the [MIT license](http://www.opensource.org/licenses/MIT).
+
+
+[ico-twitter]: https://img.shields.io/static/v1?label=Author&message=llaumgui&color=50ABF1&logo=twitter&style=flat-square
+[link-twitter]: https://twitter.com/llaumgui
+[ico-ghactions]: https://img.shields.io/github/workflow/status/llaumgui/JunitXml/Tests?style=flat-square&logo=github&label=Tests
+[link-ghactions]: https://github.com/llaumgui/JunitXml/actions
+[ico-version]: https://img.shields.io/packagist/v/llaumgui/junit-xml?include_prereleases&label=Package%20version&style=flat-square&logo=packagist
+[link-packagist]: https://packagist.org/packages/llaumgui/junit-xml
+[ico-license]: https://img.shields.io/github/license/llaumgui/JunitXml?style=flat-square
+[ico-sonarcloud-gate]: https://sonarcloud.io/api/project_badges/measure?branch=main&project=llaumgui-github%3Ajunit-xml&metric=alert_status
+[link-sonarcloud-gate]: https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml&branch=main
+[ico-sonarcloud-coverage]: https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=coverage
+[link-sonarcloud-coverage]: https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml
+[ico-sonarcloud-maintainability]: https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=sqale_rating
+[link-sonarcloud-maintainability]: https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml
+[ico-sonarcloud-reliability]: https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=reliability_rating
+[link-sonarcloud-reliability]: https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml
+[ico-sonarcloud-security]: https://sonarcloud.io/api/project_badges/measure?project=llaumgui-github%3Ajunit-xml&metric=security_rating
+[link-sonarcloud-security]: https://sonarcloud.io/dashboard?id=llaumgui-github%3Ajunit-xml
