@@ -1,4 +1,4 @@
-name: Tests
+name: DevOps
 
 on:
   [push, pull_request]
@@ -7,7 +7,7 @@ env:
   phpLastVersion: '7.4'
 
 jobs:
-  test:
+  test_php:
     runs-on: ubuntu-latest
     name: Build and test
 
@@ -46,6 +46,24 @@ jobs:
       working-directory: ./build/reports/
       run: sed -i 's/\/home\/runner\/work\/JunitXml\/JunitXml\//\/github\/workspace\//g' phpunit.coverage.xml
 
+
+  ##############################################################################
+  # SonarCloud job
+  #
+  test_sonar:
+    needs: [
+      test_php
+    ]
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    name: SonarCloud analyse
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
     - name: SonarCloud Scan
       if: matrix.php-version == ${{ env.phpLastVersion }}
       uses: sonarsource/sonarcloud-github-action@master
@@ -56,9 +74,20 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+
+  ##############################################################################
+  # Markdownlint job
+  #
+  test_markdownlint:
+    runs-on: ubuntu-latest
+    name: MarkdownLint
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
     - name: Markdown lint
-      if: matrix.php-version == ${{ env.phpLastVersion }}
-      uses: nosborn/github-action-markdown-cli@v1.1.1
+      uses: nosborn/github-action-markdown-cli@v3.1.0
       with:
         files: "*.md docs/*.md"
         config_file: ".markdownlint.yaml"
