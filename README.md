@@ -29,7 +29,6 @@ php composer.phar require llaumgui/junit-xml
 
 Released under the [MIT license](http://www.opensource.org/licenses/MIT).
 
-
 [ico-twitter]: https://img.shields.io/static/v1?label=Author&message=llaumgui&color=50ABF1&logo=twitter&style=flat-square
 [link-twitter]: https://twitter.com/llaumgui
 [ico-ghactions]: https://img.shields.io/github/workflow/status/llaumgui/JunitXml/DevOps?style=flat-square&logo=github&label=DevOps
