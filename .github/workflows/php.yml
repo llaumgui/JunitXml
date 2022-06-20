@@ -58,7 +58,7 @@ jobs:
 
     - name: Markdown lint
       if: matrix.php-version == ${{ env.phpLastVersion }}
-      uses: nosborn/github-action-markdown-cli@v1.1.1
+      uses: nosborn/github-action-markdown-cli@v3.1.0
       with:
         files: "*.md docs/*.md"
         config_file: ".markdownlint.yaml"
